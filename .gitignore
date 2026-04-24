@@ -482,3 +482,5 @@ $RECYCLE.BIN/
 *.swp
 API/appsettings.json
 API/MyEvents.db
+API/MyEvents.db-shm
+API/MyEvents.db-wal

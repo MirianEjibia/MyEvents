@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import axios from "axios";
+import { Button } from "@/components/ui/button";
 
 type EventDto = {
   id: string;
@@ -22,7 +23,7 @@ function App() {
   return (
     <div>
       {events?.map((e) => (
-        <div key={e.id}>{e.name}</div>
+        <Button key={e.id}>{e.name}</Button>
       ))}
     </div>
   );
