@@ -1,27 +1,30 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Core;
-using Infrastructure;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using UseCases.Events.Commands;
+using UseCases.Events.Queries;
 namespace API.Controllers;
 
-public class EventsController (ApplicationDbContext context): BaseApiController
+public class EventsController ( IMediator mediator): BaseApiController
 {
     [HttpGet]
     public async Task<ActionResult<List<Event>>> GetEvents()
     {
-        var events = await context.Events.ToListAsync();
-        return Ok(events);
-    }
+        return await mediator.Send(new GetEvents.Query());
+    } 
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<Event>> GetEvent(string id)
+    public async Task<ActionResult<Event>> GetEventDetails(string id)
     {
-        var ev = await context.Events.FindAsync(id);
-        if(ev==null)  return NotFound();
-        return Ok(ev);
+        return await mediator.Send(new GetEventDetails.Query{Id= id});
+    }
+
+        [HttpPost]
+    public async Task<ActionResult<string>> CreateEvent(Event _event)
+    {
+        return await mediator.Send(new CreateEvent.Command{Event= _event});
     }
 }

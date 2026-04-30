@@ -1,5 +1,6 @@
 using Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using UseCases.Events.Queries;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +18,7 @@ builder.Services.AddCors(options =>
             .AllowAnyMethod();
     });
 });
+builder.Services.AddMediatR(r => r.RegisterServicesFromAssemblyContaining<GetEvents.Handler>());
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
