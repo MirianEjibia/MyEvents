@@ -34,4 +34,11 @@ public class EventsController ( IMediator mediator): BaseApiController
         await mediator.Send(new UpdateEvent.Command{Event= _event});
         return NoContent();
     }
+
+    [HttpDelete("{id}")]
+    public async Task<ActionResult> DeleteEvent(string id)
+    {
+        await mediator.Send(new DeleteEvent.Command{Id= id});
+        return NoContent();
+    }
 }
