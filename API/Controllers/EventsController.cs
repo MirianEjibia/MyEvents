@@ -22,9 +22,16 @@ public class EventsController ( IMediator mediator): BaseApiController
         return await mediator.Send(new GetEventDetails.Query{Id= id});
     }
 
-        [HttpPost]
+    [HttpPost]
     public async Task<ActionResult<string>> CreateEvent(Event _event)
     {
         return await mediator.Send(new CreateEvent.Command{Event= _event});
+    }
+
+    [HttpPut]
+    public async Task<ActionResult> UpdateEvent(Event _event)
+    {
+        await mediator.Send(new UpdateEvent.Command{Event= _event});
+        return NoContent();
     }
 }

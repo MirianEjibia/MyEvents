@@ -1,6 +1,7 @@
 using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using UseCases.Events.Queries;
+using UseCases.Mappiggs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +10,7 @@ const string ClientCorsPolicy = "ClientCorsPolicy";
 // Add services to the container.
 
 builder.Services.AddControllers();
+builder.Services.AddAutoMapper(typeof(MappingProfiles).Assembly);
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(ClientCorsPolicy, policy =>
