@@ -15,9 +15,10 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy(ClientCorsPolicy, policy =>
     {
-        policy.WithOrigins("https://localhost:5005")
+        policy.WithOrigins("https://localhost:5173", "https://localhost:5005")
             .AllowAnyHeader()
-            .AllowAnyMethod();
+            .AllowAnyMethod()
+            .AllowCredentials();
     });
 });
 builder.Services.AddMediatR(r => r.RegisterServicesFromAssemblyContaining<GetEvents.Handler>());
