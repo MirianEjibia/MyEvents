@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
+import { AppBar } from "./components/AppBar/AppBar";
 
 type EventDto = {
   id: string;
@@ -20,13 +21,7 @@ function App() {
       });
   }, []);
 
-  return (
-    <div>
-      {events?.map((e) => (
-        <Button key={e.id}>{e.name}</Button>
-      ))}
-    </div>
-  );
+  return <AppBar />;
 }
 
 export default App;
