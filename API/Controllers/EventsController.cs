@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using UseCases.Events.Commands;
 using UseCases.Events.Queries;
+using UseCases.Events.DTOs;
+
 namespace API.Controllers;
 
 public class EventsController ( IMediator mediator): BaseApiController
@@ -23,9 +25,9 @@ public class EventsController ( IMediator mediator): BaseApiController
     }
 
     [HttpPost]
-    public async Task<ActionResult<string>> CreateEvent(Event _event)
+    public async Task<ActionResult<string>> CreateEvent(CraeteEventDto eventDto)
     {
-        return await mediator.Send(new CreateEvent.Command{Event= _event});
+        return await mediator.Send(new CreateEvent.Command{EventDto= eventDto});
     }
 
     [HttpPut]

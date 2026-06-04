@@ -484,3 +484,9 @@ API/appsettings.json
 API/MyEvents.db
 API/MyEvents.db-shm
 API/MyEvents.db-wal
+
+*.lscache
+API/API.csproj.lscache
+Core/Core.csproj.lscache
+Infrastructure/Infrastructure.csproj.lscache
+UseCases/UseCases.csproj.lscache
