@@ -1,6 +1,10 @@
+using API.Middlwares;
+using Core;
+using FluentValidation;
 using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using UseCases.Events.Queries;
+using UseCases.Events.Validators;
 using UseCases.Mappiggs;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,15 +25,22 @@ builder.Services.AddCors(options =>
             .AllowCredentials();
     });
 });
-builder.Services.AddMediatR(r => r.RegisterServicesFromAssemblyContaining<GetEvents.Handler>());
+builder.Services.AddMediatR(r => {
+    r.RegisterServicesFromAssemblyContaining<GetEvents.Handler>();
+    r.AddOpenBehavior(typeof(ValidationBehavior<,>));
+    });
+builder.Services.AddValidatorsFromAssemblyContaining<CreateEventValidator>();
+
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+builder.Services.AddScoped<ExceptionMiddleware>();
 
 var app = builder.Build();
 
+app.UseMiddleware<ExceptionMiddleware>();
 app.UseCors(ClientCorsPolicy);
 
 app.MapControllers();
