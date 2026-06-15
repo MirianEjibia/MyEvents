@@ -21,26 +21,24 @@ public class EventsController ( IMediator mediator): BaseApiController
     [HttpGet("{id}")]
     public async Task<ActionResult<Event>> GetEventDetails(string id)
     {
-        return await mediator.Send(new GetEventDetails.Query{Id= id});
+        return ToActionResult(await mediator.Send(new GetEventDetails.Query{Id= id}));  
     }
 
     [HttpPost]
     public async Task<ActionResult<string>> CreateEvent(CraeteEventDto eventDto)
     {
-        return await mediator.Send(new CreateEvent.Command{EventDto= eventDto});
+        return ToActionResult(await mediator.Send(new CreateEvent.Command{EventDto= eventDto}));
     }
 
     [HttpPut]
-    public async Task<ActionResult> UpdateEvent(Event _event)
+    public async Task<ActionResult<Unit>> UpdateEvent(Event _event)
     {
-        await mediator.Send(new UpdateEvent.Command{Event= _event});
-        return NoContent();
+        return ToActionResult(await  mediator.Send(new UpdateEvent.Command{Event= _event}));
     }
 
     [HttpDelete("{id}")]
-    public async Task<ActionResult> DeleteEvent(string id)
+    public async Task<ActionResult<Unit>> DeleteEvent(string id)
     {
-        await mediator.Send(new DeleteEvent.Command{Id= id});
-        return NoContent();
+        return ToActionResult(await mediator.Send(new DeleteEvent.Command{Id= id}));
     }
 }
