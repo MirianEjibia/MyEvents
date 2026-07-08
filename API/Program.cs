@@ -31,6 +31,9 @@ builder.Services.AddCors(options =>
             .AllowCredentials();
     });
 });
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
 builder.Services.AddMediatR(r => {
     r.RegisterServicesFromAssemblyContaining<GetEvents.Handler>();
     r.AddOpenBehavior(typeof(ValidationBehavior<,>));
@@ -47,7 +50,18 @@ builder.Services.AddIdentityApiEndpoints<User>(opts => opts.User.RequireUniqueEm
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
+
 var app = builder.Build();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+    app.UseSwaggerUI((opt) =>
+    {
+        opt.SwaggerEndpoint("/swagger/v1/swagger.json", "Swagegr UI");
+    });
+}
 
 app.UseMiddleware<ExceptionMiddleware>();
 app.UseCors(ClientCorsPolicy);
