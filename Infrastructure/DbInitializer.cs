@@ -1,11 +1,24 @@
 using Core;
+using Microsoft.AspNetCore.Identity;
 
 namespace Infrastructure;
 
 public class DbInitializer
 {
-    public static async Task SeedData (ApplicationDbContext context)
+    public static async Task SeedData (ApplicationDbContext context, UserManager<User> userManager)
     {
+        if(!userManager.Users.Any())
+        {
+            var users = new List<User>
+            {
+                new() { DispalyName = "Mirian Ejibia", UserName="mirian.ejibia@gmail.com", Email="mirian.ejibia@gmail.com"},
+                new() { DispalyName = "Tim Barcklay", UserName="tim.barcklay@gmail.com", Email="tim.barcklay@gmail.com"}
+            };
+            foreach (var user in users)
+            {
+                await userManager.CreateAsync(user, "Pa$$w0rd");
+            }
+        }
         if(context.Events.Any()) return;
 
         string[] eventTypes = ["Tech Meetup", "Music Festival", "Food Expo", "Startup Summit", "Art Fair", "Wellness Retreat"];
