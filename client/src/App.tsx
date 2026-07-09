@@ -1,6 +1,6 @@
+import { Outlet } from "react-router";
 import "./App.css";
 import { AppBar } from "./components/AppBar/AppBar";
-import { DashboardPage } from "./pages/dashboard/DashboardPage";
 import { LoginPage } from "./pages/Login/LoginPage";
 import { useAppSelector } from "./store";
 import { authSelector } from "./features/auth/slice";
@@ -15,7 +15,7 @@ function App() {
   return (
     <>
       <AppBar />
-      <DashboardPage />
+      <Outlet />
     </>
   );
 }

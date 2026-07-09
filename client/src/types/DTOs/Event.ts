@@ -12,3 +12,13 @@ export interface EventItem {
 }
 
 export type EventItemList = Array<EventItem>;
+
+export interface CreateEventRequest {
+  name: string;
+  description: string;
+  startDate: string;
+  country: string;
+  city: string;
+  parallel: number;
+  meridian: number;
+}
