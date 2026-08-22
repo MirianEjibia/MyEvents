@@ -1,8 +1,3 @@
-import { useSelector } from "react-redux";
-import { Link } from "react-router";
-import { fetchEvents, EventsListSelector } from "../../features/events/slice";
-import { useEffect } from "react";
-import { useAppDispatch } from "../../store";
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -12,6 +7,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router";
+import { EventsListSelector, fetchEvents } from "../../features/events/slice";
+import { useAppDispatch } from "../../store";
+import { FilterBar } from "./components/FilterBar";
 
 export const DashboardPage = () => {
   const dispatch = useAppDispatch();
@@ -21,12 +22,18 @@ export const DashboardPage = () => {
   }, [dispatch]);
 
   const events = useSelector(EventsListSelector);
-
+  const navigate = useNavigate();
   return (
-    <>
-      <div className="flex justify-end p-4">
-        <Button render={<Link to="/events/create" />}>Create Event</Button>
-      </div>
+    <div>
+      <>
+        <FilterBar />
+      </>
+      <Button
+        onClick={() => navigate("/events/create")}
+        className={"float-right m-3"}
+      >
+        Create Event
+      </Button>
       <Table>
         <TableHeader>
           <TableRow>
@@ -46,13 +53,15 @@ export const DashboardPage = () => {
               <TableCell>{ev.description}</TableCell>
               <TableCell>{ev.city}</TableCell>
               <TableCell>{ev.country}</TableCell>
-              <TableCell>{new Date(ev.startDate).toLocaleDateString()}</TableCell>
+              <TableCell>
+                {new Date(ev.startDate).toLocaleDateString()}
+              </TableCell>
               <TableCell>{new Date(ev.endDate).toLocaleDateString()}</TableCell>
               <TableCell>{ev.isCancelled ? "Cancelled" : "Active"}</TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
-    </>
+    </div>
   );
 };

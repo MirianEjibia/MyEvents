@@ -1,22 +1,24 @@
 import { Outlet } from "react-router";
 import "./App.css";
 import { AppBar } from "./components/AppBar/AppBar";
-import { LoginPage } from "./pages/Login/LoginPage";
-import { useAppSelector } from "./store";
-import { authSelector } from "./features/auth/slice";
+import { Menu } from "./components/Menu/Menu";
 
 function App() {
-  const { accessToken } = useAppSelector(authSelector);
-
-  if (!accessToken) {
-    return <LoginPage />;
-  }
+  // if (!accessToken) {
+  //   return <LoginPage />;
+  // }
 
   return (
-    <>
+    <div className="h-dvh flex flex-col">
       <AppBar />
-      <Outlet />
-    </>
+      <div className="flex flex-1 overflow-hidden">
+        <Menu />
+        <main className="flex-1 min-w-0 overflow-y-auto p-2">
+          <Outlet />
+        </main>
+      </div>
+      <footer />
+    </div>
   );
 }
 

@@ -11,7 +11,7 @@ namespace Core
         public bool IsFailuire () => !IsSuccess;
         public string? Error { get; set;}
         public T? Value {get; set; }
-        public int?ErrorCode { get; set; }
+        public int? ErrorCode { get; set; }
 
         public  static Result<T> Success (T value) => new() {IsSuccess = true, Value = value };
 

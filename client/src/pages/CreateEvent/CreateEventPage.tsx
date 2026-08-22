@@ -1,49 +1,42 @@
-import { useState } from "react";
-import type { FormEvent } from "react";
-import { useNavigate } from "react-router";
-import { useAppDispatch, useAppSelector } from "@/store";
-import { createEvent, CreateEventStateSelector } from "@/features/events/slice";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
   Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
-  CardDescription,
-  CardContent,
-  CardFooter,
 } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { CreateEventStateSelector } from "@/features/events/slice";
+import { useAppDispatch, useAppSelector } from "@/store";
+import { useForm, type FieldValues } from "react-hook-form";
+import { useNavigate } from "react-router";
 
 export const CreateEventPage = () => {
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   const { isCreating, createError } = useAppSelector(CreateEventStateSelector);
 
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [country, setCountry] = useState("");
-  const [city, setCity] = useState("");
-  const [parallel, setParallel] = useState("");
-  const [meridian, setMeridian] = useState("");
-
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const result = await dispatch(
-      createEvent({
-        name,
-        description,
-        startDate,
-        country,
-        city,
-        parallel: Number(parallel),
-        meridian: Number(meridian),
-      }),
-    );
-    if (createEvent.fulfilled.match(result)) {
-      navigate("/events");
-    }
+  const { register, reset, handleSubmit } = useForm();
+  // const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   const result = await dispatch(
+  //     createEvent({
+  //       name,
+  //       description,
+  //       startDate,
+  //       country,
+  //       city,
+  //       parallel: Number(parallel),
+  //       meridian: Number(meridian),
+  //     }),
+  //   );
+  //   if (createEvent.fulfilled.match(result)) {
+  //     navigate("/events");
+  //   }
+  // };
+  const onSubmit = (data: FieldValues) => {
+    console.log("data", data);
   };
 
   return (
@@ -51,55 +44,36 @@ export const CreateEventPage = () => {
       <Card className="w-full max-w-sm">
         <CardHeader>
           <CardTitle>Create Event</CardTitle>
-          <CardDescription>Fill in the details for the new event</CardDescription>
+          <CardDescription>
+            Fill in the details for the new event
+          </CardDescription>
         </CardHeader>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <CardContent className="flex flex-col gap-4">
             <div className="flex flex-col gap-2">
               <Label htmlFor="name">Name</Label>
-              <Input
-                id="name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-              />
+              <Input id="name" {...register("name")} required />
             </div>
             <div className="flex flex-col gap-2">
               <Label htmlFor="description">Description</Label>
-              <Input
-                id="description"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                required
-              />
+              <Input id="description" {...register("description")} required />
             </div>
             <div className="flex flex-col gap-2">
               <Label htmlFor="startDate">Start Date</Label>
               <Input
                 id="startDate"
                 type="date"
-                value={startDate}
-                onChange={(e) => setStartDate(e.target.value)}
+                {...register("startDate")}
                 required
               />
             </div>
             <div className="flex flex-col gap-2">
               <Label htmlFor="city">City</Label>
-              <Input
-                id="city"
-                value={city}
-                onChange={(e) => setCity(e.target.value)}
-                required
-              />
+              <Input id="city" {...register("city")} required />
             </div>
             <div className="flex flex-col gap-2">
               <Label htmlFor="country">Country</Label>
-              <Input
-                id="country"
-                value={country}
-                onChange={(e) => setCountry(e.target.value)}
-                required
-              />
+              <Input id="country" {...register("country")} required />
             </div>
             <div className="flex flex-col gap-2">
               <Label htmlFor="parallel">Parallel</Label>
@@ -107,8 +81,7 @@ export const CreateEventPage = () => {
                 id="parallel"
                 type="number"
                 step="any"
-                value={parallel}
-                onChange={(e) => setParallel(e.target.value)}
+                {...register("parallel")}
                 required
               />
             </div>
@@ -118,8 +91,7 @@ export const CreateEventPage = () => {
                 id="meridian"
                 type="number"
                 step="any"
-                value={meridian}
-                onChange={(e) => setMeridian(e.target.value)}
+                {...register("meridian")}
                 required
               />
             </div>
