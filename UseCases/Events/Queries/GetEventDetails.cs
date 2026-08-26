@@ -14,11 +14,11 @@ public class GetEventDetails
     };
     public class Handler(ApplicationDbContext context) : IRequestHandler<Query, Result<Event>>
     {
-        public  async Task< Result<Event>> Handle(Query request, CancellationToken cancellationToken)
-        {
-            var _event =  await context.Events.FindAsync([request.Id], cancellationToken);
-            if (_event == null) return Result<Event>.Failuire("Event not found", 404);
-            return Result<Event>.Success(_event);
+        public  async Task<Result<Event>> Handle(Query request, CancellationToken cancellationToken)
+            {
+                var _event =  await context.Events.FindAsync([request.Id], cancellationToken);
+                if (_event == null) return Result<Event>.Failuire("Event not found", 404);
+                return Result<Event>.Success(_event);
         }
     }
 }

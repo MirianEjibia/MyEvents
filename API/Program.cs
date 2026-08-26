@@ -3,6 +3,8 @@ using Core;
 using FluentValidation;
 using Infrastructure;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting.Server;
+using Microsoft.AspNetCore.Hosting.Server.Features;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
@@ -56,10 +58,20 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
     app.UseSwaggerUI((opt) =>
     {
         opt.SwaggerEndpoint("/swagger/v1/swagger.json", "Swagegr UI");
+    });
+
+    app.Lifetime.ApplicationStarted.Register(() =>
+    {
+        var addresses = app.Services.GetRequiredService<IServer>()
+            .Features.Get<IServerAddressesFeature>()?.Addresses;
+
+        foreach (var address in addresses ?? [])
+        {
+            app.Logger.LogInformation("Swagger UI running at: {Address}/swagger", address);
+        }
     });
 }
 

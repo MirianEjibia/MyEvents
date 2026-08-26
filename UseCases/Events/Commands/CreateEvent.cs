@@ -22,7 +22,7 @@ public class CreateEvent
             var _event = mapper.Map<Event>(request.EventDto);
             context.Events.Add(_event);
             var res = await context.SaveChangesAsync(cancellationToken) > 0;
-            if (!res) return  Result<string>.Failuire("Failed to Add Event", 400);
+                if(!res) return Result<String>.Failuire($"Failed to add  Event with id ${_event.Id}", 400);
             return Result<string>.Success(_event.Id);
         }
     }

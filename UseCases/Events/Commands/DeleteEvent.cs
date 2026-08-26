@@ -16,11 +16,10 @@ public class DeleteEvent
         public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
         {
             var _event = await context.Events.FindAsync( request.Id, cancellationToken );
-            if (_event == null) return Result<Unit>.Failuire("Failed to delete Event", 404);
+            if (_event == null) return Result<Unit>.Failuire($"Failed to delete event with id {request.Id}", 404);
             context.Remove(_event);
             context.SaveChanges();
             return Result<Unit>.Success(Unit.Value);  
-
         }
     }
 } 
