@@ -31,9 +31,9 @@ public class EventsController ( IMediator mediator): BaseApiController
     }
 
     [HttpPut]
-    public async Task<ActionResult<Unit>> UpdateEvent(Event _event)
+    public async Task<ActionResult<Unit>> UpdateEvent(EditEventDto _event)
     {
-        return ToActionResult(await  mediator.Send(new UpdateEvent.Command{Event= _event}));
+        return ToActionResult(await  mediator.Send(new UpdateEvent.Command{EventDto= _event}));
     }
 
     [HttpDelete("{id}")]

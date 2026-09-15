@@ -6,12 +6,10 @@ using UseCases.Events.DTOs;
 
 namespace UseCases.Events.Validators
 {
-    public class CreateEventValidator: AbstractValidator<CreateEvent.Command>
+    public class CreateEventValidator: BaseEventValidator<CreateEvent.Command,CraeteEventDto>
     {
-        public CreateEventValidator()
+        public CreateEventValidator() : base (x=>x.EventDto)
         {
-            RuleFor(x => x.EventDto.Name).NotEmpty().WithMessage("Name in required");
-            RuleFor(x => x.EventDto.Country).NotEmpty().WithMessage("Country in required");
         }
     }
 }
