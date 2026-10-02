@@ -9,13 +9,12 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { CreateEventStateSelector } from "@/features/events/slice";
-import { useAppDispatch, useAppSelector } from "@/store";
+import { useCreateEvent } from "@/features/events/queries";
 import { useForm, type FieldValues } from "react-hook-form";
 import { useNavigate } from "react-router";
 
 export const CreateEventPage = () => {
-  const { isCreating, createError } = useAppSelector(CreateEventStateSelector);
+  const { isPending: isCreating, error: createError } = useCreateEvent();
 
   const { register, reset, handleSubmit } = useForm();
   // const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -96,7 +95,9 @@ export const CreateEventPage = () => {
               />
             </div>
             {createError && (
-              <p className="text-sm text-destructive">{createError}</p>
+              <p className="text-sm text-destructive">
+                {createError.message || "Failed to create event"}
+              </p>
             )}
           </CardContent>
           <CardFooter>

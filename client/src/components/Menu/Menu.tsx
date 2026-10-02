@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { paths } from "@/constants/paths";
 import { useState } from "react";
 import { NavLink } from "react-router";
 import { Button } from "../ui/button";
@@ -7,6 +8,7 @@ import {
   ChevronsRight,
   LayoutDashboard,
   Sparkles,
+  Users,
 } from "lucide-react";
 
 export const Menu = () => {
@@ -22,7 +24,7 @@ export const Menu = () => {
         <ul className="flex h-full grow flex-col gap-3 overflow-auto">
           <li>
             <NavLink
-              to="/dashboard"
+              to={paths.dashboard}
               className={({ isActive }) =>
                 cn(
                   "flex items-center gap-2 rounded-md p-2 hover:bg-accent hover:text-accent-foreground",
@@ -37,7 +39,7 @@ export const Menu = () => {
 
           <li>
             <NavLink
-              to="/ai-mode"
+              to={paths.aiMode}
               className={({ isActive }) =>
                 cn(
                   "flex items-center gap-2 rounded-md p-2 hover:bg-accent hover:text-accent-foreground",
@@ -47,6 +49,21 @@ export const Menu = () => {
             >
               <Sparkles className="size-5 shrink-0" />
               {isMenuOpen && <span>AI mode</span>}
+            </NavLink>
+          </li>
+
+          <li>
+            <NavLink
+              to={paths.userListDemo}
+              className={({ isActive }) =>
+                cn(
+                  "flex items-center gap-2 rounded-md p-2 hover:bg-accent hover:text-accent-foreground",
+                  isActive && "bg-accent text-accent-foreground",
+                )
+              }
+            >
+              <Users className="size-5 shrink-0" />
+              {isMenuOpen && <span>User List Demo</span>}
             </NavLink>
           </li>
         </ul>

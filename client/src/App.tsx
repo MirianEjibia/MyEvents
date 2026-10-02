@@ -1,13 +1,15 @@
-import { Outlet } from "react-router";
+import { Navigate, Outlet } from "react-router";
 import "./App.css";
 import { AppBar } from "./components/AppBar/AppBar";
 import { Menu } from "./components/Menu/Menu";
+import { useCurrentUser } from "./features/user/queries";
+import { paths } from "./constants/paths";
 
 function App() {
-  // if (!accessToken) {
-  //   return <LoginPage />;
-  // }
-
+  const { isPending, data } = useCurrentUser();
+  console.log(isPending, data);
+  if (isPending) return <div> Is Laoding </div>;
+  if (!data) return <Navigate to={paths.login} replace />;
   return (
     <div className="h-dvh flex flex-col">
       <AppBar />

@@ -4,10 +4,11 @@ import { DashboardPage } from "./pages/dashboard/DashboardPage";
 import { CreateEventPage } from "./pages/CreateEvent/CreateEventPage";
 import { AIModePage } from "./pages/AIMode/AIModePage";
 import { LoginPage } from "./pages/Login/LoginPage";
+import { paths } from "./constants/paths";
 
 export const router = createBrowserRouter([
   {
-    path: "/",
+    path: paths.home,
     element: <App />,
     children: [
       {
@@ -33,7 +34,7 @@ export const router = createBrowserRouter([
     ],
   },
   {
-    path: "/auth/login",
+    path: paths.login,
     element: <LoginPage />,
   },
 ]);

@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { paths } from "@/constants/paths";
 import {
   Table,
   TableBody,
@@ -7,21 +8,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
-import { EventsListSelector, fetchEvents } from "../../features/events/slice";
-import { useAppDispatch } from "../../store";
+import { useEvents } from "../../features/events/queries";
 import { FilterBar } from "./components/FilterBar";
 
 export const DashboardPage = () => {
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(fetchEvents());
-  }, [dispatch]);
-
-  const events = useSelector(EventsListSelector);
+  const { data: events = [] } = useEvents();
   const navigate = useNavigate();
   return (
     <div>
@@ -29,7 +21,7 @@ export const DashboardPage = () => {
         <FilterBar />
       </>
       <Button
-        onClick={() => navigate("/events/create")}
+        onClick={() => navigate(paths.createEvent)}
         className={"float-right m-3"}
       >
         Create Event

@@ -1,52 +1,32 @@
-import type { FC } from "react";
 import {
   MenubarContent,
   MenubarGroup,
   MenubarItem,
   MenubarMenu,
-  MenubarSeparator,
-  MenubarShortcut,
-  MenubarSub,
-  MenubarSubContent,
-  MenubarSubTrigger,
   MenubarTrigger,
 } from "@/components/ui/MenuBar";
-import { User } from "lucide-react";
+import { useCurrentUser, useLogOut } from "@/features/user/queries";
+import { KeyRound, LogOut, User } from "lucide-react";
+import type { FC } from "react";
 
 const AccountControls: FC = () => {
+  const { data: info } = useCurrentUser();
+  const displayName = info?.dispalyName || info?.userName || info?.email;
+  const { mutate: logOut } = useLogOut();
+
   return (
     <MenubarMenu>
       <MenubarTrigger>
         <User className="text-foreground" />
-        <span className="text-foreground destruc"> user name</span>
+        <span className="text-foreground destruc"> {displayName}</span>
       </MenubarTrigger>
       <MenubarContent>
         <MenubarGroup>
           <MenubarItem>
-            New Tab <MenubarShortcut>⌘T</MenubarShortcut>
+            <KeyRound /> Change Password
           </MenubarItem>
-          <MenubarItem>
-            New Window <MenubarShortcut>⌘N</MenubarShortcut>
-          </MenubarItem>
-          <MenubarItem disabled>New Incognito Window</MenubarItem>
-        </MenubarGroup>
-        <MenubarSeparator />
-        <MenubarGroup>
-          <MenubarSub>
-            <MenubarSubTrigger>Share</MenubarSubTrigger>
-            <MenubarSubContent>
-              <MenubarGroup>
-                <MenubarItem>Email link</MenubarItem>
-                <MenubarItem>Messages</MenubarItem>
-                <MenubarItem>Notes</MenubarItem>
-              </MenubarGroup>
-            </MenubarSubContent>
-          </MenubarSub>
-        </MenubarGroup>
-        <MenubarSeparator />
-        <MenubarGroup>
-          <MenubarItem>
-            Print... <MenubarShortcut>⌘P</MenubarShortcut>
+          <MenubarItem onClick={() => logOut()}>
+            <LogOut /> Log out
           </MenubarItem>
         </MenubarGroup>
       </MenubarContent>
