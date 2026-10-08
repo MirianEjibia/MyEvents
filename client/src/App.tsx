@@ -7,7 +7,6 @@ import { paths } from "./constants/paths";
 
 function App() {
   const { isPending, data } = useCurrentUser();
-  console.log(isPending, data);
   if (isPending) return <div> Is Laoding </div>;
   if (!data) return <Navigate to={paths.login} replace />;
   return (

@@ -9,3 +9,5 @@ export interface LoginResponse {
   expiresIn: number;
   refreshToken: string;
 }
+
+export type RegisterRequestBody = LoginRequest;

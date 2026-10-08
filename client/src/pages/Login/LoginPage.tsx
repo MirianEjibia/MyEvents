@@ -12,13 +12,15 @@ import {
   CardContent,
   CardFooter,
 } from "@/components/ui/card";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { paths } from "@/constants/paths";
+import { ButtonGroup } from "@/components/ui/button-group";
 
 export const LoginPage = () => {
   const { mutateAsync: logIn, isPending: isLoading, error } = useLogIn();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   const navigate = useNavigate();
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -66,9 +68,14 @@ export const LoginPage = () => {
             )}
           </CardContent>
           <CardFooter>
-            <Button type="submit" className="w-full" disabled={isLoading}>
-              {isLoading ? "Logging in..." : "Log in"}
-            </Button>
+            <ButtonGroup orientation={"vertical"}>
+              <Button type="submit" className="w-full " disabled={isLoading}>
+                {isLoading ? "Logging in..." : "Log in"}
+              </Button>
+              <Link className={"w-full text-blue-400"} to={paths.register}>
+                If you do not have account, click here to register
+              </Link>
+            </ButtonGroup>
           </CardFooter>
         </form>
       </Card>

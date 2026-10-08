@@ -17,7 +17,8 @@ axiosInstance.interceptors.response.use(
     return res;
   },
   (err) => {
-    if (err.response.status === 401) router.navigate(paths.login);
+    if (err.response?.status === 401) router.navigate(paths.login);
+    return Promise.reject(err);
   },
 );
 

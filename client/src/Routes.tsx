@@ -5,6 +5,7 @@ import { CreateEventPage } from "./pages/CreateEvent/CreateEventPage";
 import { AIModePage } from "./pages/AIMode/AIModePage";
 import { LoginPage } from "./pages/Login/LoginPage";
 import { paths } from "./constants/paths";
+import { RegisterPage } from "./pages/Register/RegisterPage";
 
 export const router = createBrowserRouter([
   {
@@ -36,5 +37,9 @@ export const router = createBrowserRouter([
   {
     path: paths.login,
     element: <LoginPage />,
+  },
+  {
+    path: paths.register,
+    element: <RegisterPage />,
   },
 ]);
