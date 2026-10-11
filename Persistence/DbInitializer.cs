@@ -1,7 +1,8 @@
 using Core;
+using Core.Entities;
 using Microsoft.AspNetCore.Identity;
 
-namespace Infrastructure;
+namespace Persistence;
 
 public class DbInitializer
 {

@@ -3,7 +3,7 @@ using System;
 using AutoMapper;
 using Core;
 using FluentValidation;
-using Infrastructure;
+using Persistence;
 using MediatR;
 using UseCases.Events.DTOs;
 

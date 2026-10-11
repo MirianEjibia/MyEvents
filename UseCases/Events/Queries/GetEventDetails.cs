@@ -1,7 +1,7 @@
 using System;
 using System.Net;
 using Core;
-using Infrastructure;
+using Persistence;
 using MediatR;
 
 namespace UseCases.Events.Queries;

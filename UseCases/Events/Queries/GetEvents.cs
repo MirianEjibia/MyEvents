@@ -1,6 +1,6 @@
 using System;
 using Core;
-using Infrastructure;
+using Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 

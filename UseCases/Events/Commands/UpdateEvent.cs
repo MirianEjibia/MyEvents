@@ -2,7 +2,7 @@
 using System;
 using AutoMapper;
 using Core;
-using Infrastructure;
+using Persistence;
 using MediatR;
 using UseCases.Events.DTOs;
 

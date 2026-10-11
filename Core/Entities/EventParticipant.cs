@@ -9,11 +9,10 @@ namespace Core.Entities
     public class EventParticipant
     {
         public DateTime RegisterDate {get;set;}
-        public User User {get;set;}
-        public int UserId {get;set;}
-        public Event Event {get;set;}
-        public int EventId {get;set;}
-  
-        
+        public User User {get;set;} = null!;
+        public string UserId {get;set;} = null!;
+        public Event Event {get;set;} = null!;
+        public string EventId {get;set;} = null!;
+        public bool IsHost {get;set;}
     }
 }

@@ -1,5 +1,5 @@
 using Core;
-using Infrastructure;
+using Persistence;
 using MediatR;
 
 namespace UseCases.Events.Commands;

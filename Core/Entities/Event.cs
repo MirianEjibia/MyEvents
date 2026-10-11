@@ -1,4 +1,5 @@
 using System;
+using Core.Entities;
 
 namespace Core;
 
@@ -15,4 +16,5 @@ public class Event
     public required string City { get; set; }
     public double  Parallel {get;set;}
     public double Meridian {get; set;}
+    public ICollection<EventParticipant> Participants {get;set;} = [];
 }

@@ -1,7 +1,8 @@
 using API.Middlwares;
 using Core;
+using Core.Entities;
 using FluentValidation;
-using Infrastructure;
+using Persistence;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Hosting.Server.Features;
