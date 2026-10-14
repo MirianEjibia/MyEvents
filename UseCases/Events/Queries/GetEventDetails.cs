@@ -3,22 +3,31 @@ using System.Net;
 using Core;
 using Persistence;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
+using UseCases.Events.DTOs;
+using SQLitePCL;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 
 namespace UseCases.Events.Queries;
 
 public class GetEventDetails
 {
-    public class Query: IRequest<Result<Event>>
+    public class Query: IRequest<Result<EventDto>>
     {
         public required string Id { get; set;}
     };
-    public class Handler(ApplicationDbContext context) : IRequestHandler<Query, Result<Event>>
+    public class Handler(ApplicationDbContext context, IMapper mapper) : IRequestHandler<Query, Result<EventDto>>
     {
-        public  async Task<Result<Event>> Handle(Query request, CancellationToken cancellationToken)
+        public  async Task<Result<EventDto>> Handle(Query request, CancellationToken cancellationToken)
             {
-                var _event =  await context.Events.FindAsync([request.Id], cancellationToken);
-                if (_event == null) return Result<Event>.Failuire("Event not found", 404);
-                return Result<Event>.Success(_event);
+                var _event =  await context.Events.ProjectTo<EventDto>(mapper.ConfigurationProvider)
+                    .FirstOrDefaultAsync(x=>x.Id == request.Id, cancellationToken);
+                if (_event == null) return Result<EventDto>.Failuire("Event not found", 404);
+
+                var eventRes = mapper.Map<EventDto>(_event);
+
+                return Result<EventDto>.Success(eventRes);
         }
     }
 }

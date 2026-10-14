@@ -13,13 +13,13 @@ namespace API.Controllers;
 public class EventsController ( IMediator mediator): BaseApiController
 {
     [HttpGet]
-    public async Task<ActionResult<List<Event>>> GetEvents()
+    public async Task<ActionResult<List<EventDto>>> GetEvents()
     {
         return await mediator.Send(new GetEvents.Query());
     } 
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<Event>> GetEventDetails(string id)
+    public async Task<ActionResult<EventDto>> GetEventDetails(string id)
     {
         return ToActionResult(await mediator.Send(new GetEventDetails.Query{Id= id}));  
     }

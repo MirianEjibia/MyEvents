@@ -12,6 +12,8 @@ using Microsoft.EntityFrameworkCore;
 using UseCases.Events.Queries;
 using UseCases.Events.Validators;
 using UseCases.Mappiggs;
+using UseCases.Interfaces;
+using Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,6 +36,7 @@ builder.Services.AddCors(options =>
             .AllowCredentials();
     });
 });
+builder.Services.AddScoped<IUserAccessor, UserAccessor>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
