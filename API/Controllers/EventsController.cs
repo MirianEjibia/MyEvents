@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using UseCases.Events.Commands;
 using UseCases.Events.Queries;
 using UseCases.Events.DTOs;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers;
 
@@ -30,9 +31,11 @@ public class EventsController ( IMediator mediator): BaseApiController
         return ToActionResult(await mediator.Send(new CreateEvent.Command{EventDto= eventDto}));
     }
 
-    [HttpPut]
-    public async Task<ActionResult<Unit>> UpdateEvent(EditEventDto _event)
-    {
+    [HttpPut("{id}")]
+    [Authorize(Policy = "IsEventHost")]
+    public async Task<ActionResult<Unit>> UpdateEvent(EditEventDto _event, string id)
+    { 
+        _event.Id = id;
         return ToActionResult(await  mediator.Send(new UpdateEvent.Command{EventDto= _event}));
     }
 
@@ -40,5 +43,11 @@ public class EventsController ( IMediator mediator): BaseApiController
     public async Task<ActionResult<Unit>> DeleteEvent(string id)
     {
         return ToActionResult(await mediator.Send(new DeleteEvent.Command{Id= id}));
+    }
+    [HttpPost("{id}/attend")]
+    [Authorize( Policy = "IsEventHost")]
+    public async Task<ActionResult<Unit>> UpdateAttandance(string id)
+    {
+        return ToActionResult(await mediator.Send(new UpdateAttandance.Command{Id= id}));
     }
 }

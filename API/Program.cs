@@ -13,7 +13,8 @@ using UseCases.Events.Queries;
 using UseCases.Events.Validators;
 using UseCases.Mappiggs;
 using UseCases.Interfaces;
-using Infrastructure;
+using Infrastructure.Authozation;
+using Infrastructure.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,7 +40,13 @@ builder.Services.AddCors(options =>
 builder.Services.AddScoped<IUserAccessor, UserAccessor>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
+builder.Services.AddAuthorization(opt =>{
+   opt.AddPolicy("IsEventHost", policy =>
+   {
+      policy.Requirements.Add(new IsHostRequirement()); 
+   }); 
+});
+builder.Services.AddTransient<IAuthorizationHandler, IsHostHandler>();
 builder.Services.AddMediatR(r => {
     r.RegisterServicesFromAssemblyContaining<GetEvents.Handler>();
     r.AddOpenBehavior(typeof(ValidationBehavior<,>));

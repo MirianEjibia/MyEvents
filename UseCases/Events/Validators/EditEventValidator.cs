@@ -12,7 +12,7 @@ namespace UseCases.Events.Validators
     {
         public EditEventValidator(): base(x=>x.EventDto)
         {
-            RuleFor(x => x.EventDto.Id).NotEmpty().WithMessage("");
+            RuleFor(x => x.EventDto.Id).NotEmpty().WithMessage("Id is required");
         }
     }
 }

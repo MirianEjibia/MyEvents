@@ -11,6 +11,7 @@ public class MappingProfiles: Profile
     {
         CreateMap<Event, Event>();
         CreateMap<CraeteEventDto, Event>();
+        CreateMap<EditEventDto, Event>();
         CreateMap<Event, EventDto>()
             .ForMember(e => e.HostName, o=>o.MapFrom(e => 
                 e.Participants.FirstOrDefault(e=>e.IsHost)!.User.UserName))

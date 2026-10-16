@@ -9,7 +9,7 @@ using UseCases.Interfaces;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
 
-namespace Infrastructure
+namespace Infrastructure.Authozation
 {
     public class UserAccessor(IHttpContextAccessor httpContextAccessor, ApplicationDbContext applicationDbContext) : IUserAccessor
     {
